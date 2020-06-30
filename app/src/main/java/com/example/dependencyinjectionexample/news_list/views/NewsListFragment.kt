@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dependencyinjectionexample.R
 import com.example.dependencyinjectionexample.base.APIHelper
+import com.example.dependencyinjectionexample.news_details.views.NewsDetailsFragment
 import com.example.dependencyinjectionexample.news_list.data.NewsDataManagerImpl
 import com.example.dependencyinjectionexample.news_list.data.models.NewsListModel
 import com.example.dependencyinjectionexample.news_list.data.remote.NewsAPI
@@ -43,14 +44,14 @@ class NewsListFragment : Fragment() {
 
         newsListAdapter = NewsListViewAdapter(newsListModel) { selectedNews ->
             val bundle = Bundle().apply {
-                //putLong(NewsDetailFragment.NEWS_ID, selectedNews?.id ?: -1)
+                putLong(NewsDetailsFragment.NEWS_ID, selectedNews?.id ?: -1)
             }
-            /*fragmentManager?.run {
+            fragmentManager?.run {
                 beginTransaction()
-                    .replace(R.id.anchor, NewsDetailFragment.create(bundle))
+                    .replace(R.id.anchor, NewsDetailsFragment.create(bundle))
                     .addToBackStack(null)
                     .commit()
-            }*/
+            }
         }
 
         news_recycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)

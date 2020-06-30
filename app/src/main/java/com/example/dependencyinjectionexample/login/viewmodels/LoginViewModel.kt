@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.dependencyinjectionexample.login.data.LoginDataManager
 import com.example.dependencyinjectionexample.login.data.models.User
+import javax.inject.Inject
 
-class LoginViewModel(val loginDataManager: LoginDataManager): ViewModel() {
+class LoginViewModel @Inject constructor(val loginDataManager: LoginDataManager): ViewModel() {
 
     private val _userLiveData =  MutableLiveData<User?>()
     val userLiveData: LiveData<User?>
@@ -20,6 +21,7 @@ class LoginViewModel(val loginDataManager: LoginDataManager): ViewModel() {
         val user = loginDataManager.getUserBy(userName, password)
         user?.let {
             _insertUserData.postValue(loginDataManager.insertUser(it))
+            loginDataManager.insertUser(it)
         }
 
         _userLiveData.postValue(user)

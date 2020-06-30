@@ -5,8 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.example.dependencyinjectionexample.MainActivity
+import com.example.dependencyinjectionexample.main.MainActivity
 import com.example.dependencyinjectionexample.R
 import com.example.dependencyinjectionexample.base.APIHelper
 import com.example.dependencyinjectionexample.base.DBHelper
@@ -31,16 +30,18 @@ class LoginActivity : AppCompatActivity() {
         val loginDataManager = LoginDataManagerImpl(loginAPIHelper, loginDBHelper)
         viewModel = LoginViewModel(loginDataManager)
 
+
+
+        viewModel.userLiveData.observe(this, Observer { user ->
+            if(user == null){
+                Toast.makeText(this, "Invalid Login Credentials", Toast.LENGTH_LONG).show()
+            }else {
+                startActivity(Intent(this, MainActivity::class.java))
+            }
+        })
+
         loginBtn.setOnClickListener {
             viewModel.login(editUserName.text.toString(), editPassword.text.toString())
         }
-
-        viewModel.insertUserData.observe(this, Observer {long ->
-            if(long > 0){
-                startActivity(Intent(this, MainActivity::class.java))
-            }else {
-                Toast.makeText(this, "Invalid Login Credentials", Toast.LENGTH_LONG).show()
-            }
-        })
     }
 }

@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import com.example.dependencyinjectionexample.App
 import com.example.dependencyinjectionexample.R
 import com.example.dependencyinjectionexample.base.APIHelper
+import com.example.dependencyinjectionexample.news_details.di.DaggerNewsDetailsComponent
 import com.example.dependencyinjectionexample.news_details.viewmodels.NewsDetailsViewModel
 import com.example.dependencyinjectionexample.news_list.data.NewsDataManagerImpl
 import com.example.dependencyinjectionexample.news_list.data.remote.NewsAPI
+import com.example.dependencyinjectionexample.news_list.di.DaggerNewsListComponent
 import kotlinx.android.synthetic.main.fragment_news_details.*
 
 
@@ -38,6 +41,11 @@ class NewsDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        DaggerNewsDetailsComponent.builder()
+            .applicationComponent((activity?.application as App).applicationComponent)
+            .build().inject(this)
+
 
         val apiHelper = APIHelper(activity!!.applicationContext)
         val newsAPIHelper = NewsAPI(apiHelper)

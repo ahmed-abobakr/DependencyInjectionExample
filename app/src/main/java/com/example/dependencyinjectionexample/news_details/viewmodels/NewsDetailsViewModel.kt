@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.dependencyinjectionexample.news_list.data.NewsDataManager
 import com.example.dependencyinjectionexample.news_list.data.models.News
+import javax.inject.Inject
 
-class NewsDetailsViewModel(private val newsDataManager: NewsDataManager): ViewModel() {
+class NewsDetailsViewModel @Inject constructor (private val newsDataManager: NewsDataManager): ViewModel() {
 
     private val _newsItem = MutableLiveData<News>()
     val newsItem: LiveData<News>

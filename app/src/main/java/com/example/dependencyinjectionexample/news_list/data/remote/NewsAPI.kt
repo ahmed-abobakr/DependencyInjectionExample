@@ -2,8 +2,9 @@ package com.example.dependencyinjectionexample.news_list.data.remote
 
 import com.example.dependencyinjectionexample.base.APIHelper
 import com.example.dependencyinjectionexample.news_list.data.models.News
+import javax.inject.Inject
 
-class NewsAPI(val apiHelper: APIHelper):
+class NewsAPI @Inject constructor(val apiHelper: APIHelper):
     NewsRemoteDS {
 
     private val newsMap = mutableMapOf<Long, News>()

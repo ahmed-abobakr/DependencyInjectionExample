@@ -3,8 +3,9 @@ package com.example.dependencyinjectionexample.login.data.local
 import android.content.ContentValues
 import com.example.dependencyinjectionexample.base.DBHelper
 import com.example.dependencyinjectionexample.login.data.models.User
+import javax.inject.Inject
 
-class LoginDbHelper constructor(val dbHelper: DBHelper):
+class LoginDbHelper @Inject constructor(val dbHelper: DBHelper):
     LoginLocalDS {
 
 

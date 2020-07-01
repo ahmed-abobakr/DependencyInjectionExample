@@ -8,21 +8,27 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dependencyinjectionexample.App
 import com.example.dependencyinjectionexample.R
 import com.example.dependencyinjectionexample.base.APIHelper
 import com.example.dependencyinjectionexample.news_details.views.NewsDetailsFragment
 import com.example.dependencyinjectionexample.news_list.data.NewsDataManagerImpl
 import com.example.dependencyinjectionexample.news_list.data.models.NewsListModel
 import com.example.dependencyinjectionexample.news_list.data.remote.NewsAPI
+import com.example.dependencyinjectionexample.news_list.di.DaggerNewsListComponent
 import com.example.dependencyinjectionexample.news_list.view_models.NewsListViewModel
 import kotlinx.android.synthetic.main.fragment_news_list.*
+import javax.inject.Inject
 
 
 class NewsListFragment : Fragment() {
 
     lateinit var newsListAdapter: NewsListViewAdapter
+    @Inject
     lateinit var viewModel: NewsListViewModel
-    private val newsListModel = NewsListModel(emptyList())
+    @Inject
+    lateinit var newsListModel: NewsListModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,12 +39,12 @@ class NewsListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        DaggerNewsListComponent.builder()
+            .applicationComponent((activity?.application as App).applicationComponent)
+            .build().inject(this)
         super.onViewCreated(view, savedInstanceState)
 
-        val apiHelper = APIHelper(activity!!.applicationContext)
-        val newsAPIHelper = NewsAPI(apiHelper)
-        val newsDataManager = NewsDataManagerImpl(newsAPIHelper)
-        viewModel = NewsListViewModel(newsDataManager)
+
 
 
 

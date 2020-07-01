@@ -2,8 +2,9 @@ package com.example.dependencyinjectionexample.login.data.remote
 
 import com.example.dependencyinjectionexample.base.APIHelper
 import com.example.dependencyinjectionexample.login.data.models.User
+import javax.inject.Inject
 
-class LoginAPIHelper(val apiHelper: APIHelper):
+class LoginAPIHelper  @Inject constructor(val apiHelper: APIHelper):
     LoginRemoteDS {
     override fun getUserBy(userName: String, password: String): User? {
         if(userName.isNotEmpty() && password.length > 6){

@@ -4,8 +4,11 @@ import android.content.Context
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DBHelper(context: Context, dbName: String, dbVersion: Int):
+@Singleton
+class DBHelper @Inject constructor (context: Context, dbName: String, dbVersion: Int):
     SQLiteOpenHelper(context, dbName, null, dbVersion) {
 
     companion object{
